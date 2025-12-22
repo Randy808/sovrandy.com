@@ -1,1 +1,1 @@
-Welcome to my blog! My name is Randy and I'm a application developer who primarily focuses on Bitcoin and Bitcoin-related technology. Take a look around!
+I'm a software engineer by trade and a free thinker by nature. This blog is a collection of musings and posts about things I find interesting enough to share.
