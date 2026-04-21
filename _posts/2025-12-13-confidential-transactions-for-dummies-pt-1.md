@@ -1,4 +1,4 @@
-# Confidential Transactions for Dummies Part 1 - Pedersen Commitments
+# Confidential Transactions For Dummies, Part 1 - Pedersen Commitments
 
 ## Prerequisite knowledge
 The requirements are knowledge of the elliptic curve discrete log problem and elliptic curve field operations.
@@ -15,7 +15,7 @@ Confidential transactions are transactions where the output amounts are hidden t
 In this post I'll be focusing on the function that transforms the amount into a commitment, which in this context is a "Pedersen Commitment."
 
 ## What are Pedersen commitments?
-Let's break this term down. The first thing I'll explain is what a commitment is. A commitment is an output value of a function f that takes in a secret, or multiple secrets, as input. What makes it a *commitment* is the property that the input can't easily be derived from the output (which we refer to as **hiding**), and that another input can't easily be found that creates that same output (what we call **binding**). 
+Let's break this term down. The first thing I'll explain is what a commitment is. A commitment is an output value of a function f that takes in a secret, or multiple secrets, as input. What makes it a *commitment* is the property that the input can't easily be derived from the output (which we refer to as **hiding**), and that another input can't easily be found that creates that same output (what we call **binding**).
 
 **Pedersen** commitments rely on the assumption that the 'discrete log problem' is hard. With this assumption, it's not computationally feasible to find another input that equals that output. **Opening** a commitment means obtaining the input from the committer that produces the commitment.
 
@@ -32,7 +32,7 @@ In the context of elliptic curves, the expression becomes:
 The original scheme worked in a multiplicative group where `g^a` and `h^b` are both integers for which multiplication is defined. For elliptic curves, `a*G` and `b*H` are **points** for which point multiplication is **not** defined—we only have point addition. This naturally causes a change in the expression to use point addition instead.
 
 ## How do Pedersen commitments help us hide transaction amounts?
-The main goal of designing a confidential transaction scheme is to maintain the integrity of the blockchain so that no money is unjustly created. Pedersen commitments allow us to do that by allowing us to perform *arithmetic operations on commitments*. 
+The main goal of designing a confidential transaction scheme is to maintain the integrity of the blockchain so that no money is unjustly created. Pedersen commitments allow us to do that by allowing us to perform *arithmetic operations on commitments*.
 
 Because I can perform arithmetic operations on commitments, I can subtract the sum of all output commitments from the sum of all input commitments and verify that the result is 0 to verify no money is being created (or destroyed in a way that's unaccounted for). In short, using `f` to represent the function that turns values into Pedersen commitments, our check looks like:
 

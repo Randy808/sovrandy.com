@@ -1,5 +1,4 @@
-
-# Confidential transactions for dummies pt 2 - Borromean Range Proofs
+# Confidential Transactions For Dummies, Part 2 - Borromean Range Proofs
 
 ## Why are range proofs important?
 In the previous post, we discussed pedersen commitments and how they hide transaction amounts while still allowing balances to add up correctly. We then touched on the topic of how one can fake 2 outputs that cancel out to spend more money than they have. Range proofs are the patch for this. They let you prove that committed values stay within sane bounds without revealing the values themselves. Without range proofs, confidential transactions don’t work.

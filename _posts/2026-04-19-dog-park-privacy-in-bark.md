@@ -52,7 +52,7 @@ Each round can have multiple senders and recipients, and is funded with the ASP'
 
 #### Out-of-round transfers
 
-Out of round transfers are those that don't need an on-chain transaction to be made. Instead of new vtxos being anchored to on-chain transactions, they become anchored to the sender's **off-chain** exit transaction. When a sender spends their exit to forfeit their vtxo, a new **checkpoint** transaction is made using the exit as its sole input. This can be conceptualized as an off-chain 'round' of sorts, with an output that spends to an exit transaction for each recipient.
+Out of round transfers are those that don't need an on-chain transaction to be made. Instead of new vtxos being anchored to on-chain transactions, they become anchored to the sender's **off-chain** exit transaction. When a sender spends their exit to forfeit their vtxo, a new **checkpoint** transaction is made using the old transaction's exit as its input. This can be conceptualized as an off-chain 'round' of sorts, except with one input and potentially multiple outputs that can be spent to an exit transaction for the associated recipient.
 
 ### Privacy
 

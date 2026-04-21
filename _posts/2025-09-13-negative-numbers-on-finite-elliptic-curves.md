@@ -1,4 +1,4 @@
-# The TRUTH about "negative" numbers on finite elliptic curves!!
+# The TRUTH About "Negative" Numbers on Finite Elliptic Curves!!
 
 I think people often struggle to make cryptography concepts clear. I'm not claiming I can, but I can make a commitment to trying—starting with a click-bait title! I might get some information wrong since I'm not a cryptographer, but hopefully I won't ;)
 
@@ -36,7 +36,7 @@ There are also operations we can perform on **points**, like adding one point to
 
 ## Why do we mod scalars by 'n' instead of 'p'??
 
-After **n**, the scalar multipliers we input start to produce the same points again since mathematicians **proved** we can't have any more than **n** unique points on the curve! Well, why not just work with scalars mod **p** instead? Because the scalar multiplication operation has a period of **n**, not **p**—meaning after **n** steps, we return to our starting point.
+After **n**, the scalar multipliers we input start to produce the same points again since mathematicians **proved** that the points on the curve make a cyclic group. One of the properties of this cyclic group makes it so we have **n** unique points on the curve! Well, why not just work with scalars mod **p** instead? Because the scalar multiplication operation has a period of **n**, not **p**—meaning after **n** steps, we return to our starting point.
 
 I'll also mention that after modding the scalar by **n**, all coordinate calculations are done **mod p**. Remember, **n** is the order of the curve (number of points), while **p** is the field size for coordinates.
 
