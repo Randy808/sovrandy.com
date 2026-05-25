@@ -2,15 +2,15 @@
 
 ## Introduction
 
-This is a follow-up post to the series I'm making about zero knowledge arguments. In this post I'll be describing a way to prove the product of 2 hidden values using something called the 'product argument'.
+This is a follow-up post to the series I'm making about zero knowledge arguments. In this post I'll be describing a way to prove the product of n hidden values using something called the 'product argument'. I'll focus on the case with just 2 hidden values at first, then inch my way closer to the reference method described in the Bayer–Groth single-value product argument.
 
 I think this will serve as an interesting primitive to any zk-practitioner's toolbox and is integral in understanding the Bulletproofs confidential transaction scheme that I'll describe in a future post.
 
-Before reading this, you should know that I take the liberty of making a **commitment** of a value mean the value is being multiplied by a generator `G` on the `secp256k1` curve (e.g., `commit(a) = a*G`). In practice, we'd actually need something like a Pedersen commitment to make these schemes secure. Pedersen commitments add another randomness factor, and although I opted for simple non-Pedersen commitments, know that the math doesn't change much when this randomness vector is introduced.
+Before reading this, you should know that I take the liberty of making a **commitment** of a value mean the value is being multiplied by a generator `G` on the `secp256k1` curve (e.g., `commit(a) = a*G`). In practice, we'd actually need something like a Pedersen commitment to make these schemes secure. Pedersen commitments add another randomness factor, and although I opted for simple non-Pedersen commitments, know that the high-level algebra doesn't change much when this randomness is introduced.
 
 ## What is the product argument?
 
-The **product argument** is a protocol between a prover and a verifier where the prover aims to convince a verifier that the preimages of two committed values, `A1` and `A2`, have a public product `b`.
+The **product argument** is a protocol between a prover and a verifier where the prover aims to convince a verifier that the preimages of `n` committed values have a public product `b`. I'll be focusing on the case where `n=2` to introduce the subject.
 
 ## Proof Approach
 
@@ -61,7 +61,7 @@ Why does the prover have to give these `E1` and `E0` commitments **before** `x` 
 
 **Set `E1` to any random value and solve for `E0`**:
 
-`E0 = commit(a1'*a2') - x^2*commit(fake_product)`
+`E0 = commit(a1'*a2') - x^2*commit(fake_product) - x*E1`
 
 ## Rolling products
 
@@ -78,7 +78,7 @@ x^3*(a1*a2*a3) + x^2*(a1*a3*d2 + a2*a3*d1 + a1*a2*d3) + x*(a3*d1*d2 + a1*d2*d3 +
 ```
 I had trouble just typing that. Proving intermediate product commitments and keeping each argument to just 2 terms for the sake of simplicity just makes sense.
 
-## Rolling products optimizations
+## Rolling product optimizations
 
 Let's review the current rolling product process. As mentioned above, the prover creates a derived value for the intermediate product using a new  blinder `d_b`:
 `b_12' = b_12*x + d_b`
@@ -103,10 +103,10 @@ If we subtract the first equation (the original derived product expression) from
 
 The prover can simply combine their commitments and send `(E1 - D_b)` as a single cross-term, along with `E0`. The verifier computes `commit(a1'*a2') - x*commit(b_12')`, and checks if it equals `x*(E1 - D_b) + E0`.
 
-Why does this work as a replacement to giving `B_12` and checking to see if it's in the original product and the intermediate value? Well let's think about it from the angle of trying to cheat the verifier as the prover. If the prover lied about `b_12'` actually containing `a1*a2`, then the `x^2` terms in the subtraction of thr 2 equations would not match and could never be eliminated. Doing so would require the prover to commit to a value, that when multiplied by `x`, can magically get rid of the `x^2` term and equal an expression made with prover-provided pre-committed values.
+Why does this work as a replacement to giving `B_12` and checking to see if it's in the original product and the intermediate value? Well let's think about it from the angle of trying to cheat the verifier as the prover. If the prover lied about `b_12'` actually containing `a1*a2`, then the `x^2` terms in the subtraction of the 2 equations would not match and could never be eliminated. Doing so would require the prover to commit to a value, that when multiplied by `x`, can magically get rid of the `x^2` term and equal an expression made with prover-provided pre-committed values.
 
 By verifying this way, the prover never has to send `B_12` over the network, saving precious bytes in our proof size.
 
 # Conclusion
 
-After going through the mechanics of the product argument, hopefully you see that it's not too different from the sum argument. It's a little bit more involved since the derived values `x*a1 + d1` and `x*a2 + d2` are polynomials, forcing us to do polynomial multiplication, but I believe the principals used in the argument are a natural extension to the principals used to build sum arguments. My next post will somewhat build on the concepts here to explain product arguments in the vectorized setting and get into how we can prove the inner-product of vectors in zero knowledge. Stay tuned!
+After going through the mechanics of the product argument, hopefully you see that it's not too different from the sum argument. It's a little bit more involved since the derived values `x*a1 + d1` and `x*a2 + d2` are polynomials, forcing us to do polynomial multiplication, but I believe the principles used in the argument are a natural extension to the principles used to build sum arguments. My next post will somewhat build on the concepts here to explain product arguments in the vectorized setting and get into how we can prove the inner-product of vectors in zero knowledge. Stay tuned!
