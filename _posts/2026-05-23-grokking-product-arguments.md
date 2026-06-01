@@ -1,4 +1,4 @@
-# Grokking Product Arguments
+# Grokking Product Arguments, Part 1
 
 ## Introduction
 
