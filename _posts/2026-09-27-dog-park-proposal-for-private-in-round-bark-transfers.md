@@ -1,8 +1,8 @@
 # Dog Pack: A Proposal for Private In-Round Bark Transfers
 
 <video controls preload="metadata" style="width: 100%; height: auto;">
-  <source src="{{ '/video/Private-In-Round-Bark-Transfers-1080p.mp4' | relative_url }}" type="video/mp4">
-  <a href="{{ '/video/Private-In-Round-Bark-Transfers-1080p.mp4' | relative_url }}">Watch the video</a>
+  <source src="{{ '/video/Dog-Pack-Private-In-Round-Bark-Transfers-1080p.mp4' | relative_url }}" type="video/mp4">
+  <a href="{{ '/video/Dog-Pack-Private-In-Round-Bark-Transfers-1080p.mp4' | relative_url }}">Watch the video</a>
 </video>
 
 This post describes a proposed algorithm to unlink a forfeited vtxo from its in-round output.
